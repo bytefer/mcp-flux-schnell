@@ -12,7 +12,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { existsSync } from "fs";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { z } from "zod";
 
@@ -120,16 +120,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const directory = WORKING_DIR;
       const filepath = join(directory, filename);
 
-      // Check if directory exists
+      // Check if directory exists and create it if it doesn't
       if (!existsSync(directory)) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Directory Error: The specified directory does not exist: ${directory}`,
-            },
-          ],
-        };
+        try {
+          await mkdir(directory, { recursive: true });
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Directory Error: Failed to create directory ${directory}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              },
+            ],
+          };
+        }
       }
 
       try {

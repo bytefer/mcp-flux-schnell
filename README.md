@@ -2,6 +2,9 @@
 
 A TypeScript-based MCP server that implements a text-to-image generation tool using the Flux Schnell model. This server integrates with Cloudflare's Flux Schnell worker API to provide image generation capabilities through MCP.
 
+- [Creating your own Flux Schnell MCP Server is so easy! — Part 1](https://medium.com/@bytefer/creating-your-own-flux-schnell-mcp-server-is-so-easy-part-1-4b9a5b3fb14f)
+- [Creating your own Flux Schnell MCP Server is so easy! — Part 2](https://medium.com/@bytefer/creating-your-own-flux-schnell-mcp-server-is-so-easy-part-2-bd711836a493)
+
 ## Features
 
 ### Tools
