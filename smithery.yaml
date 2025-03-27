@@ -1,0 +1,37 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - fluxApiUrl
+      - fluxApiToken
+    properties:
+      fluxApiUrl:
+        type: string
+        description: Flux API URL for Cloudflare Flux Schnell API.
+      fluxApiToken:
+        type: string
+        description: Authentication token for Flux Schnell API.
+      workingDir:
+        type: string
+        description: Optional directory to save generated images. Defaults to current
+          directory.
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'node',
+      args: ['build/index.js'],
+      env: {
+        FLUX_API_URL: config.fluxApiUrl,
+        FLUX_API_TOKEN: config.fluxApiToken,
+        WORKING_DIR: config.workingDir || process.cwd()
+      }
+    })
+  exampleConfig:
+    fluxApiUrl: https://api.fluxschnell.example.com
+    fluxApiToken: your-secret-token
+    workingDir: /data/images
